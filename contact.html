@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Formularz kontaktowy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/custom_colors.css">
+    <link rel="stylesheet" href="styles/elements_loading.css">
+    <style>
+      body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .container.py-5 {
+    flex: 1;
+  }
+
+  footer {
+    margin-top: auto;
+  }
+
+    </style>
+</head>
+
+<body class="bg-cream">
+
+    <div id="header-placeholder"></div>
+
+    <div class="container py-5">
+        <h1 class="text-center text-mocha fw-bold mb-4 scroll-reveal">Skontaktuj się z nami</h1>
+
+        <form id="contact-form" class="bg-beige p-4 rounded shadow scroll-reveal">
+            <div class="mb-3">
+                <label for="toEmail" class="form-label text-mocha">E-mail odbiorcy</label>
+                <input type="email" class="form-control" id="toEmail" value="hodowla@temp.com" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label for="fromEmail" class="form-label text-mocha">Twój e-mail</label>
+                <input type="email" class="form-control" id="fromEmail" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="fromPhone" class="form-label text-mocha">Twój numer telefonu</label>
+                <input type="tel" class="form-control" id="fromPhone" pattern="^[0-9\s+\-]{7,15}$" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="message" class="form-label text-mocha">Wiadomość</label>
+                <textarea class="form-control" id="message" rows="5" required></textarea>
+            </div>
+
+            <div id="form-error" class="text-danger mb-3 d-none">Uzupełnij poprawnie wszystkie pola.</div>
+
+            <button type="submit" class="btn btn-outline-mocha px-4 bg-mocha text-beige">Wyślij wiadomość</button>
+        </form>
+    </div>
+
+ <footer class="bg-beige text-center text-lg-start text-mocha py-4 mt-5 border-top scroll-reveal">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-6 mb-4 mb-md-0">
+          <h5 class="fw-bold">Hodowla Ragdolli</h5>
+          <p class="mb-1">tel: <a href="tel:+48123456789" class="text-decoration-none text-mocha">+48 123 456 789</a>
+          </p>
+          <p class="mb-1">e-mail: <a href="mailto:hodowla@temp.pl"
+              class="text-decoration-none text-mocha">hodowla@temp.pl</a></p>
+          <p class="mb-0">Lokalizacja: Gdańsk, Polska</p>
+        </div>
+
+        <div class="col-md-6 text-md-end">
+          <h5 class="fw-bold">Linki</h5>
+          <ul class="list-unstyled">
+            <li><a href="about_us.html" class="text-mocha text-decoration-none">O nas</a></li>
+            <li><a href="our_cats.html" class="text-mocha text-decoration-none">Nasze koty</a></li>
+            <li><a href="contact.html" class="text-mocha text-decoration-none">Kontakt</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <hr class="my-4">
+
+      <div class="text-center">
+        <small>&copy; 2025 Wszystkie prawa zastrzeżone.</small>
+      </div>
+    </div>
+  </footer>
+
+    <script src="scripts/elements_loading_animation.js"></script>
+    <script>
+        fetch("partials/header.html")
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById("header-placeholder").innerHTML = html;
+
+                const script = document.createElement("script");
+                script.src = "scripts/dropdown_loader.js";
+                document.body.appendChild(script);
+            });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("contact-form");
+            const emailInput = document.getElementById("fromEmail");
+            const phoneInput = document.getElementById("fromPhone");
+
+            const messageInput = document.getElementById("message");
+
+            function validateEmail(value) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+            }
+
+            function validatePhone(value) {
+                return /^\+?[0-9\s\-()]{6,}$/.test(value);
+            }
+
+            function showError(input, message) {
+                let error = input.nextElementSibling;
+                if (!error || !error.classList.contains("form-error")) {
+                    error = document.createElement("div");
+                    error.className = "form-error text-danger mt-1 small";
+                    input.parentNode.appendChild(error);
+                }
+                error.textContent = message;
+            }
+
+            function clearError(input) {
+                const error = input.nextElementSibling;
+                if (error && error.classList.contains("form-error")) {
+                    error.remove();
+                }
+            }
+
+            emailInput.addEventListener("input", () => {
+                if (!validateEmail(emailInput.value)) {
+                    showError(emailInput, "Podaj poprawny adres e-mail");
+                } else {
+                    clearError(emailInput);
+                }
+            });
+
+            phoneInput.addEventListener("input", () => {
+                if (!validatePhone(phoneInput.value)) {
+                    showError(phoneInput, "Numer telefonu powinien zawierać tylko cyfry i znaki: + - ( )");
+                } else {
+                    clearError(phoneInput);
+                }
+            });
+
+            form.addEventListener("submit", (e) => {
+                let valid = true;
+
+                if (!validateEmail(emailInput.value)) {
+                    showError(emailInput, "Podaj poprawny adres e-mail");
+                    valid = false;
+                }
+
+                if (!validatePhone(phoneInput.value)) {
+                    showError(phoneInput, "Nieprawidłowy numer telefonu");
+                    valid = false;
+                }
+
+                if (messageInput.value.trim().length < 5) {
+                    showError(messageInput, "Wpisz wiadomość (min. 5 znaków)");
+                    valid = false;
+                } else {
+                    clearError(messageInput);
+                }
+
+                if (!valid) e.preventDefault();
+            });
+        });
+    </script>
+
+</body>
+
+</html>

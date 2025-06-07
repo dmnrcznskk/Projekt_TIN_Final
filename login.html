@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Logowanie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/custom_colors.css" />
+  <link rel="stylesheet" href="styles/elements_loading.css" />
+</head>
+<body class="bg-cream d-flex flex-column justify-content-center align-items-center min-vh-100">
+
+  <div class="bg-white rounded shadow p-4" style="min-width: 320px;">
+    <h2 class="text-center text-mocha fw-bold mb-4">Panel administracyjny</h2>
+    <form action="/api/login" method="POST">
+      <div class="mb-3">
+        <label for="password" class="form-label">Hasło</label>
+        <input type="password" name="password" id="password" class="form-control" required />
+      </div>
+      <button type="submit" class="btn btn-outline-mocha w-100 px-4 bg-mocha text-beige">Zaloguj się</button>
+      <p class="text-danger text-center mt-3">
+        <script>
+          if (new URLSearchParams(location.search).has("error")) {
+            document.write("Nieprawidłowe hasło.");
+          }
+        </script>
+      </p>
+    </form>
+  </div>
+
+  <script src="scripts/elements_loading_animation.js"></script>
+</body>
+</html>

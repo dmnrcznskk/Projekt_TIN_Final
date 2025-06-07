@@ -1,0 +1,12 @@
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; 
+  }
+
+  .nav-item.dropdown .dropdown-toggle::after {
+    transition: transform 0.3s ease;
+  }
+
+  .nav-item.dropdown:hover .dropdown-toggle::after {
+    transform: rotate(180deg);
+  }

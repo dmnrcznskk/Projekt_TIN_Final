@@ -1,0 +1,51 @@
+.bg-cream {
+    background-color: #F3EEEA !important;
+}
+
+.bg-beige {
+    background-color: #EBE3D5 !important;
+}
+
+.bg-latte {
+    background-color: #B0A695 !important;
+}
+
+.bg-mocha {
+    background-color: #776B5D !important;
+}
+
+.text-cream {
+    color: #F3EEEA !important;
+}
+
+.text-beige {
+    color: #EBE3D5 !important;
+}
+
+.text-latte {
+    color: #B0A695 !important;
+}
+
+.text-mocha {
+    color: #776B5D !important;
+}
+
+.carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    filter: invert(1) grayscale(1) brightness(0.3);
+  }
+
+.btn-outline-mocha.bg-mocha:hover {
+  background-color: #847466 !important; 
+  border-color: #847466 !important;
+}
+
+#lightbox-overlay {
+  backdrop-filter: blur(20px);
+  transition: opacity 0.3s ease;
+}
+
+#lightbox-overlay.d-none {
+  opacity: 0;
+  pointer-events: none;
+}
