@@ -131,5 +131,5 @@ app.post("/api/dodaj-miot", requireAuth, upload.any(), (req, res) => {
 
 
 app.listen(PORT, () => {
-  console.log(`✅ Serwer działa: http://localhost:${PORT}`);
+  console.log(`Serwer działa: http://localhost:${PORT}`);
 });
